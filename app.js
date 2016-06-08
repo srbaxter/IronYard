@@ -56,7 +56,7 @@ window.addEventListener('load', function() {
 	// Helper loop for the bind() function to keep hold of the iterator
 	// For buttons 0-9
 	// Used http://stackoverflow.com/questions/8909652/adding-click-event-listeners-in-loop for the following
-	for (var t = 1; t < 10; t++) {
+	for (var t = 0; t < 10; t++) {
 		bind(t);
 	}
 
