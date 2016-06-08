@@ -1,7 +1,15 @@
-var password = [7,7,8];
+/*	Takes different actions based on buttons pushed and checks for the correct
+ *	length and password entered
+ */
+
+// Required password
+var password = [7,7,8,'#'];
+// What the user has entered
 var entered = [];
 
-// true if password is correct 
+/* Checks to see if the entered password is the correct length 
+ * and if each button pushed matches the password
+ */
 function isCorrect() {
 	if (password.length !== entered.length) {
 		return false;
@@ -15,38 +23,51 @@ function isCorrect() {
 	return true;
 }
 
-// Event Listener on page load
+/* Event Listener on page load
+ */
 window.addEventListener('load', function() {
-	// Get the button 7 ID and make event listener when clicked
-	var button7 = document.getElementById('button-7');
-	button7.addEventListener('click', function() {
+	// Gets the element IDs of the screen, hash button, and asterisk button
+	var screen = document.getElementById('screen');
+	var hash = document.getElementById('button-hash');
+	var ast = document.getElementById('button-ast');
 
-		var screen = document.getElementById('screen');
+	// Event listener for when # is clicked
+	// This should be the last button clicked
+	hash.addEventListener('click', function() {
+		// Adds # to the screen and pushes to the entered array
+		screen.textContent += '#';
+		entered.push('#');
 
-		// change the content at the top of the keypad
-		screen.textContent += '7';
-		entered.push(7);
-
-		// see if it mattches, add the CSS success tag, and change the screen message
+		// See if entered password matches, adds the CSS success tag,
+		// and changes the screen message to "success"
 		if (isCorrect()) {
 			screen.classList.add('success');
 			screen.textContent = 'success';
 		}
 	});
 
-	// Get the button 8 ID and make event listener when clicked
-	var button8 = document.getElementById('button-8');
-	button8.addEventListener('click', function() {
-
-		var screen = document.getElementById('screen');
-		// change the content at the top of the keypad
-		screen.textContent += '8';
-		entered.push(8);
-
-		if (isCorrect()) {
-			screen.classList.add('success');
-			screen.textContent = 'success';
-		}
+	// Event listener for when * is clicked
+	ast.addEventListener('click', function() {
+		// Resets the screen to blank, and resets the entered array to empty
+		screen.textContent = '';
+		entered.length = 0;
 	});
 
+	// Helper loop for the bind() function to keep hold of the iterator
+	// For buttons 0-9
+	// Used http://stackoverflow.com/questions/8909652/adding-click-event-listeners-in-loop for the following
+	for (var t = 1; t < 10; t++) {
+		bind(t);
+	}
+
+	// Helper function to create and keep each instance of the buttons
+	// Used for buttons 0-9
+	function bind(t) {
+		var button = document.getElementById('button-' + t);
+		button.addEventListener('click', function() {
+			// Adds the number to the screen and pushes it to the entered array
+			screen.textContent += t;
+			entered.push(t);
+		});	
+	}
 });
